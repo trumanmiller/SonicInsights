@@ -3,14 +3,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: './client/index.js',
+  entry: './client/index.jsx',
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './index.html'),
+      template: path.resolve(__dirname, './client/index.html'),
     }),
   ],
   module: {
@@ -34,30 +34,20 @@ module.exports = {
   devServer: {
     host: 'localhost',
     port: 8080,
-    // enable HMR on the devServer
     hot: true,
-    // fallback to root for other urls
-    // historyApiFallback: true,
+    historyApiFallback: true,
 
     static: {
-      // match the output path
-      directory: './index.html',
-      // match the output 'publicPath'
-      publicPath: '/',
+      directory: path.resolve(__dirname, 'build'),
+      // publicPath: '/',
     },
 
     // headers: { 'Access-Control-Allow-Origin': '*' },
-    proxy: {
-      '/api/**': {
-        target: 'http://localhost:3000/',
-        secure: false,
-      },
-    },
+    // proxy: {
+    //   '/api/**': {
+    //     target: 'http://localhost:3000/',
+    //     secure: false,
+    //   },
+    // },
   },
-  // proxy: {
-  //   '/api/**': {
-  //     target: 'http://localhost:3000/',
-  //     secure: false,
-  //   },
-  // },
 };

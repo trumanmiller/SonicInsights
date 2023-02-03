@@ -1,0 +1,9 @@
+{
+  "client_id": "<your client_id>",
+  "client_secret": "<your client_secret",
+  "refresh_token": "<your refresh_token>",
+  "access_token": "<will be filled when a request is made to the '/' endpoint>",
+  "token_type": "Bearer",
+  "expires_in": "<will be autofilled but is currently unused>",
+  "scope": "playlist-read-private playlist-read-collaborative ugc-image-upload user-follow-read playlist-modify-private user-read-email user-read-private app-remote-control streaming user-follow-modify user-modify-playback-state user-library-read user-library-modify playlist-modify-public user-read-playback-state user-read-currently-playing user-read-recently-played user-read-playback-position user-top-read"
+}
