@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-// co querystring = require('querystring');
 
 const SpotifyController = {
   refreshAccessToken: async (req, res, next) => {
@@ -8,6 +7,7 @@ const SpotifyController = {
       fs.readFileSync(path.join(__dirname, '../data/data.json'))
     );
     const myHeaders = new Headers();
+    // TODO impliment check to check if access token is valid
     // if (data.expires_in < Date.now() + 3500) return next();
 
     myHeaders.append(
@@ -20,7 +20,7 @@ const SpotifyController = {
     urlencoded.append('grant_type', 'refresh_token');
     urlencoded.append(
       'refresh_token',
-      'AQATqBaH2yz8wQ3k-EYsujTrjqBY-g5Uqt0LRnnRUCF3qyX4xV6RgWa3_6myK3RM97RfQyRUKlkup0DQYGWHDqFh5bkx6OIDjObxie2x5qb5SnN_Ztl8XhGoh3j9jT1J6P8'
+      '<refresh token, preferably from data.json>'
     );
 
     const requestOptions = {
@@ -33,7 +33,6 @@ const SpotifyController = {
     const response = await (
       await fetch('https://accounts.spotify.com/api/token', requestOptions)
     ).json();
-    // console.log('responded')
     data.access_token = response.access_token;
     data.expires_in = Date.now() + 3600;
 

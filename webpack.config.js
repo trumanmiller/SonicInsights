@@ -16,8 +16,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?/, //testing anything that ends in .js or .jsx
-        exclude: /(node_modules)/, //are excluding the folder that hold the node modules dependencies. Put () around node_modules
+        test: /\.jsx?/,
+        exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -39,7 +39,6 @@ module.exports = {
 
     static: {
       directory: path.resolve(__dirname, 'build'),
-      // publicPath: '/',
     },
 
     // headers: { 'Access-Control-Allow-Origin': '*' },

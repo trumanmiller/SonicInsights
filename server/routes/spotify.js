@@ -3,12 +3,10 @@ const path = require('path');
 const querystring = require('querystring');
 // const cookieParser = require('cookie-parser');
 // THIS WHOLE FILE IS CURRENTLY UNUSED
-// 
+//
 const spotifyController = require('../controllers/spotifyController');
 const router = express.Router();
 
-const client_id = 'fdd312f7b7fc42afaa3df813ca73f466'; // Your client id
-const client_secret = '68cfd238d04041f9b97eb4e3f69710fe'; // Your secret
 const redirect_uri = 'http://localhost:3000/spotify/callback'; // Your redirect uri
 
 const generateRandomString = function (length) {
@@ -22,7 +20,7 @@ const generateRandomString = function (length) {
   return text;
 };
 
-const stateKey = 'spotify_auth_state'
+const stateKey = 'spotify_auth_state';
 
 router.get('/login', (req, res) => {
   const state = generateRandomString(16);
@@ -30,14 +28,16 @@ router.get('/login', (req, res) => {
 
   const scope =
     'user-top-read user-read-playback-position user-library-read user-library-modify user-read-private user-read-email playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative ugc-image-upload user-follow-read user-follow-modify user-read-playback-state user-modify-playback-state user-read-currently-playing user-read-recently-played';
-  res.redirect('https://accounts.spotify.com/authorize?' + 
-    querystring.stringify({
-      response_type: 'code',
-      client_id: client_id,
-      scope: scope,
-      redirect_uri: redirect_uri,
-      state: state,
-    }));
+  res.redirect(
+    'https://accounts.spotify.com/authorize?' +
+      querystring.stringify({
+        response_type: 'code',
+        client_id: client_id,
+        scope: scope,
+        redirect_uri: redirect_uri,
+        state: state,
+      })
+  );
 });
 
 router.get('/callback', (req, res) => {
@@ -57,24 +57,24 @@ router.get('/callback', (req, res) => {
         grant_type: 'authorization_code',
       },
       headers: {
-        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+        Authorization:
+          'Basic ' +
+          new Buffer(client_id + ':' + client_secret).toString('base64'),
       },
       json: true,
     };
-  // const myHeaders = new Headers()
-  // myHeaders.append("Authorization", "Basic {{client_credentials}}");
+    // const myHeaders = new Headers()
+    // myHeaders.append("Authorization", "Basic {{client_credentials}}");
 
-  // const requestOptions = {
-  //   method: 'POST',
-  // }
-  
-  // fetch('https://accounts.spotify.com/api/token', {
-  //   method: 'post',
-  //   headers: {'Content-Type': 'application/json'}
-  // })
+    // const requestOptions = {
+    //   method: 'POST',
+    // }
+
+    // fetch('https://accounts.spotify.com/api/token', {
+    //   method: 'post',
+    //   headers: {'Content-Type': 'application/json'}
+    // })
   }
-})
-
-
+});
 
 module.exports = router;
