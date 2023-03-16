@@ -1,30 +1,37 @@
 {
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "node-fetch": "^3.3.0",
-    "nodemon": "^2.0.20",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "webpack": "^5.75.0",
-    "webpack-dev-server": "^4.11.1"
-  },
+  "name": "sonicinsights",
+  "version": "0.0.1",
+  "description": "a Spotify playlist generation tool that utilizes user data to create personalized playlists with customizable algorithms.",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon ./server/server.js",
-    "build": "NODE_ENV=production webpack",
-    "dev": "concurrently \"nodemon server/server/js\" \" NODE_ENV=development webpack serve --open\""
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trumanmiller/SonicInsights.git"
+  },
+  "keywords": [
+    "spotify",
+    "custom",
+    "algorithm",
+    "user",
+    "developer",
+    "diy",
+    "api",
+    "authentication"
+  ],
+  "author": "trumanmiller",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/trumanmiller/SonicInsights/issues"
+  },
+  "homepage": "https://github.com/trumanmiller/SonicInsights#readme",
   "devDependencies": {
-    "@babel/core": "^7.20.12",
-    "@babel/preset-env": "^7.20.2",
-    "@babel/preset-react": "^7.18.6",
-    "babel-loader": "^9.1.2",
-    "concurrently": "^7.6.0",
-    "css-loader": "^6.7.3",
-    "html-webpack-plugin": "^5.5.0",
-    "sass": "^1.57.1",
-    "sass-loader": "^13.2.0",
-    "style-loader": "^3.3.1",
-    "webpack-cli": "^5.0.1"
+    "nodemon": "^2.0.21"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3"
   }
 }
