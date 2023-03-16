@@ -1,7 +1,8 @@
 # SonicInsights
 
 
-SonicInsights is a music playlist generation tool that utilizes Spotify user data to create personalized playlists with customizable algorithms. It aims to provide users with a unique, by creating playlists based on algoithms that they build.
+SonicInsights is a Spotify playlist generation tool that utilizes user data to create personalized playlists with customizable algorithms. 
+It aims to provide users with unique and customizable experience, by creating playlists based on algorithms that they build.
 
 __⚠️ Please note that SonicInsights is currently a work in progress and is not yet ready for general use.__
 
