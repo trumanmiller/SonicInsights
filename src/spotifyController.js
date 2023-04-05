@@ -52,7 +52,7 @@ toExport.refreshAccessToken = async () => {
   return response.access_token;
 };
 
-toExport.getListenHistory = async (access_token) => {
+toExport.getListenHistory = async () => {
   
 };
 
