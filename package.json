@@ -33,5 +33,11 @@
   },
   "dependencies": {
     "dotenv": "^16.0.3"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
   }
 }
