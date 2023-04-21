@@ -12,6 +12,7 @@ const toExport = {};
 toExport.refreshAccessToken = () =>
   new Promise(async (resolve, reject) => {
     try {
+      // TODO: fix below
       const { client_id, client_secret, refresh_token } = await fs.readFile(
         './__SECRETS__.json'
       );

@@ -1,0 +1,83 @@
+* {
+  font-family: monospace;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+#LoginContainer {
+  padding: 0;
+  background-color: #1e1e1e;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#visualIsland {
+  height: 90vh;
+  width: 80vw;
+  background-color: #1e1e1e;
+  border-radius: 25px;
+  background: 11ee1e;
+  // box-shadow: inset 5px 5px 10px #3a3a3a, inset -5px -5px 10px #6e6e6e;
+  max-width: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#content {
+  // outline: 1px solid red;
+  width: 75%;
+  height: 80%;
+  border-radius: 22px;
+  background: #1e1e1e;
+  box-shadow: 5px 5px 10px #151515, -5px -5px 10px #272727;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#loginButton {
+  color: #d1c7c7;
+  padding: 10px;
+  border-radius: 22px;
+  background: #1e1e1e;
+  box-shadow: 5px 5px 10px #151515, -5px -5px 10px #272727,
+    0 0 0 rgba(0, 0, 0, 0) inset, 0 0 0 rgba(0, 0, 0, 0) inset;
+  transition: box-shadow 0.15s;
+}
+
+#loginButton:hover {
+  background: linear-gradient(145deg, #1b1b1b, #202020);
+  box-shadow: 4px 4px 7px #151515, -4px -4px 7px #272727,
+    0 0 0 rgba(0, 0, 0, 0) inset, 0 0 0 rgba(0, 0, 0, 0) inset;
+}
+
+#loginButton:focus {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(0, 0, 0, 0),
+    inset -3px 3px 5px #151515, inset 3px -3px 5px #272727;
+  outline: none; /* Add this to remove the default focus outline */
+}
+
+#infoIsland {
+  // margin: 100px;
+  padding: 10px;
+  // white-space: pre-line;
+  white-space: break-spaces;
+  pre {
+  }
+}
+
+.raisedNeomorphic {
+  color: #d1c7c7;
+  background: #1e1e1e;
+  box-shadow: 5px 5px 10px #151515, -5px -5px 10px #272727;
+  border-radius: 22px;
+  margin: 20px;
+}
