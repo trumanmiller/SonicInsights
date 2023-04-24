@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const querystring = require('querystring');
 const fs = require('fs/promises');
 const path = require('path');
@@ -7,7 +8,7 @@ const path = require('path');
 router.get('/', async (req, res, next) => {
   try {
     const secrets = await fs.readFile(
-      path.join(__dirname, '..', '__SECRETS__.json')
+      path.join(__dirname, '..', 'data', '__SECRETS__.json')
     );
     const { client_id, redirect_uri, scope } = JSON.parse(secrets);
 
@@ -31,7 +32,7 @@ router.get('/', async (req, res, next) => {
 router.get('/callback', async (req, res, next) => {
   try {
     const secrets = JSON.parse(
-      await fs.readFile(path.join(__dirname, '..', '__SECRETS__.json'))
+      await fs.readFile(path.join(__dirname, '..', 'data', '__SECRETS__.json'))
     );
     const { client_id, client_secret, redirect_uri } = secrets;
 
@@ -56,11 +57,11 @@ router.get('/callback', async (req, res, next) => {
     const tokenResponse = await response.json();
 
     secrets.access_token = tokenResponse.access_token;
-    secrets.refreshtoken = tokenResponse.refresh_token;
+    secrets.refresh_token = tokenResponse.refresh_token;
     secrets.expire_time = Date.now() + tokenResponse.expires_in;
 
     await fs.writeFile(
-      path.join(__dirname, '..', '__SECRETS__.json'),
+      path.join(__dirname, '..', 'data', '__SECRETS__.json'),
       JSON.stringify(secrets)
     );
     res.redirect('/editor');

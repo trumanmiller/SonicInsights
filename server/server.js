@@ -5,10 +5,13 @@ const fs = require('fs/promises');
 const app = express();
 const PORT = 3000;
 
-const loginRouter = require('./routers/loginRouter');
-
 app.use(express.json());
+
+const loginRouter = require('./routers/loginRouter');
+const spotifyRouter = require('./routers/spotifyRouter');
+
 app.use('/login', loginRouter);
+app.use('/spotify', spotifyRouter);
 
 app.use(
   ['/', '/editor'],
