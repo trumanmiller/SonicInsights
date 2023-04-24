@@ -1,12 +1,12 @@
 {
-  "name": "sonicinsights",
+  "name": "SonicInsights",
   "version": "0.0.1",
   "description": "a Spotify playlist generation tool that utilizes user data to create personalized playlists with customizable algorithms.",
-  "main": "index.js",
+  "main": ".js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon server/server.js"
   },
   "repository": {
     "type": "git",
@@ -28,12 +28,6 @@
     "url": "https://github.com/trumanmiller/SonicInsights/issues"
   },
   "homepage": "https://github.com/trumanmiller/SonicInsights#readme",
-  "devDependencies": {
-    "nodemon": "^2.0.21"
-  },
-  "dependencies": {
-    "dotenv": "^16.0.3"
-  },
   "prettier": {
     "trailingComma": "es5",
     "tabWidth": 2,

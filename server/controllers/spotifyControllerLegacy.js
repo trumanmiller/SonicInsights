@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const toExport = {};
+const spotifyController = {};
 
 /**
  * @method refreshAccessToken Refreshes the access token using the refresh token in __SECRETS__.json
@@ -9,9 +9,10 @@ const toExport = {};
 
 // TODO: convert into purely pure functions
 
-toExport.refreshAccessToken = () =>
+spotifyController.refreshAccessToken = (refresh_token, ) =>
   new Promise(async (resolve, reject) => {
     try {
+      // TODO: fix below
       const { client_id, client_secret, refresh_token } = await fs.readFile(
         './__SECRETS__.json'
       );
@@ -56,7 +57,7 @@ toExport.refreshAccessToken = () =>
  * @returns {Promise} Resolves to an object containing the user's recently played tracks or rejects with an error message
  */
 
-toExport.getListenHistory = () =>
+spotifyController.getListenHistory = () =>
   new Promise(async (resolve, reject) => {
     try {
       const { access_token } = JSON.parse(
@@ -85,7 +86,7 @@ toExport.getListenHistory = () =>
  * @returns {Promise<void>} A promise that resolves if the operation is successful or rejects with an error message if it fails
  */
 
-toExport.updatePlaylist = (playlistId, idArray, playlistLenth) =>
+spotifyController.updatePlaylist = (playlistId, idArray, playlistLenth) =>
   new Promise(async (resolve, reject) => {
     if (!Array.isArray(idArray))
       reject('spotifyController.createPlaylist ERROR: Invalid Argument');
@@ -107,4 +108,4 @@ toExport.updatePlaylist = (playlistId, idArray, playlistLenth) =>
     }
   });
 
-module.exports = toExport;
+module.exports = spotifyController;
