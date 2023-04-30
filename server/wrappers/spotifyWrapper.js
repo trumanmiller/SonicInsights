@@ -14,8 +14,7 @@ spotifyWrapper.getAccessToken = (refresh_token, client_id, client_secret) =>
       const headers = new Headers();
       headers.append(
         'Authorization',
-        'Basic ' +
-          Buffer.from(client_id + ':' + client_secret).toString('base64')
+        'Basic ' + Buffer.from(client_id + ':' + client_secret).toString('base64')
       );
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -66,7 +65,7 @@ spotifyWrapper.getListenHistory = (access_token, before = Date.now()) =>
         reject('ERROR in spotifyWrapper.getListenHistory: ' + response.error);
       else resolve(response);
     } catch (err) {
-      reject('ERROR in spotifyWrapper.getListenHistory: ' + err);
+      reject('ERROR in spotifyWrapper.getListenHistory: ' + JSON.stringify(err));
     }
   });
 
@@ -82,22 +81,68 @@ spotifyWrapper.getListenHistory = (access_token, before = Date.now()) =>
 spotifyWrapper.updatePlaylist = (access_token, playlistId, idArray) =>
   new Promise(async (resolve, reject) => {
     try {
-      const response = await fetch(
-        `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
-        {
-          method: 'PUT',
-          headers: { Authorization: 'Bearer ' + access_token },
-          body: JSON.stringify({
-            uris: idArray,
-          }),
-        }
-      );
+      const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+        method: 'PUT',
+        headers: { Authorization: 'Bearer ' + access_token },
+        body: JSON.stringify({
+          uris: idArray,
+        }),
+      });
 
       if (response.error !== undefined)
         reject('ERROR in spotifyWrapper.getListenHistory: ' + response.error);
       resolve(response);
     } catch (err) {
       reject('ERROR in spotifyWrapper.updatePlaylist: ' + err);
+    }
+  });
+
+/**
+ Creates a new Spotify playlist for the user associated with the provided access token.
+ The playlist will be named "New Playlist" with a description "New playlist description" and set to private.
+
+ * @param {string} access_token - The user's Spotify API access token.
+ * @returns {Promise<void>} A promise that resolves if the playlist is successfully created, or rejects with an error message if there is an issue.
+ * @example
+ * spotifyWrapper.createPlaylist('your_access_token')
+ *   .then(() => console.log('Playlist created successfully'))
+ *   .catch((error) => console.log('Error creating playlist:', error));
+ */
+
+spotifyWrapper.createPlaylist = (access_token) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const userResponse = await fetch('https://api.spotify.com/v1/me', {
+        method: 'GET',
+        headers: { Authorization: 'Bearer ' + access_token },
+      });
+      const userData = await userResponse.json();
+
+      if ('error' in playlistData)
+        reject('ERROR in spotifyWrapper.createPlaylist userData: ' + response.error);
+
+      const playlistResponse = await fetch(
+        `https://api.spotify.com/v1/users/${userData.id}/playlists`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: 'Bearer ' + access_token,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: 'New Playlist',
+            description: 'New playlist description',
+            public: false,
+          }),
+        }
+      );
+      const playlistData = await playlistResponse.json();
+
+      if ('error' in playlistData)
+        reject('ERROR in spotifyWrapper.createPlaylist playlistData: ' + response.error);
+      else resolve(playlistData.id);
+    } catch (err) {
+      reject('ERROR in spotifyWrapper.createPlaylist: ' + JSON.stringify(err));
     }
   });
 

@@ -9,9 +9,12 @@ app.use(express.json());
 
 const loginRouter = require('./routers/loginRouter');
 const spotifyRouter = require('./routers/spotifyRouter');
+const playlistRouter = require('./routers/playlistRouter');
+const { startInterval } = require('./wrappers/intervalWrapper');
 
 app.use('/login', loginRouter);
-app.use('/spotify', spotifyRouter);
+// app.use('/spotify', spotifyRouter);
+app.use('/playlist', playlistRouter);
 
 app.use(
   ['/', '/editor'],
@@ -44,3 +47,5 @@ if (process.env.NODE_ENV !== 'test') {
 } else {
   module.exports = app;
 }
+
+startInterval();

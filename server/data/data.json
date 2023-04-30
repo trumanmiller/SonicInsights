@@ -1,7 +1,9 @@
 {
-  "algos": [{
-    "playlistId" : 8392845391,
-    "lang" : "javascript",
-    "functionStr" : "function algorithm(arr) {return arr}"
-  }]
+  "algos": [
+    {
+      "playlistId": "4kccTKN5jIHkvCb2SceDGy",
+      "lang": "javascript",
+      "functionStr": "function algo(arr) {const cache = {};for (const el of arr.items) {cache[el.track.uri] ? cache[el.track.uri]++ : (cache[el.track.uri] = 1);}const sortedArray = [];let highestOccurence = -Infinity;let highestOccuringId = '';while (sortedArray.length < 12) {for (const key in cache) {if (highestOccurence < cache[key]) {highestOccurence = cache[key];highestOccuringId = key;}}delete cache[highestOccuringId];sortedArray.push(highestOccuringId);highestOccurence = -Infinity;highestOccuringId = '';}return sortedArray;}"
+    }
+  ]
 }

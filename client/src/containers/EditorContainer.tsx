@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import listenHistoryExample from '../assets/listenHistoryExample.js';
 import './EditorContainer.scss';
 
 import Editor from '@monaco-editor/react';
@@ -13,16 +14,16 @@ function EditorContainer({}) {
     <div id="LoginContainer">
       <div id="Sidebar" className="raisedNeomorphic">
         <button className="buttonNeomorphic" onClick={runAlgoHandler}>
-          run algo
+          Run Algo
         </button>
-        {/* <button className="raisedNeomorphic">submit solution</button> */}
+        <button className="buttonNeomorphic">Add Algo</button>
       </div>
       <div id="Editor" className="raisedNeomorphic">
         <Editor
           // height="100vh"
           theme="vs-dark"
           defaultLanguage="javascript"
-          defaultValue={''}
+          defaultValue={'' + listenHistoryExample}
           onChange={(arg) => setEditorState('' + arg)}
         />
       </div>
