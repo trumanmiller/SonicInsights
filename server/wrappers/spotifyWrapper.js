@@ -118,8 +118,10 @@ spotifyWrapper.createPlaylist = (access_token) =>
       });
       const userData = await userResponse.json();
 
-      if ('error' in playlistData)
-        reject('ERROR in spotifyWrapper.createPlaylist userData: ' + response.error);
+      if ('error' in userData)
+        reject(
+          'ERROR in spotifyWrapper.createPlaylist userData: ' + JSON.stringify(userData.error)
+        );
 
       const playlistResponse = await fetch(
         `https://api.spotify.com/v1/users/${userData.id}/playlists`,
@@ -139,10 +141,10 @@ spotifyWrapper.createPlaylist = (access_token) =>
       const playlistData = await playlistResponse.json();
 
       if ('error' in playlistData)
-        reject('ERROR in spotifyWrapper.createPlaylist playlistData: ' + response.error);
+        reject('ERROR in spotifyWrapper.createPlaylist playlistData: ' + playlistData.error);
       else resolve(playlistData.id);
     } catch (err) {
-      reject('ERROR in spotifyWrapper.createPlaylist: ' + JSON.stringify(err));
+      reject('ERROR in spotifyWrapper.createPlaylist: ' + err.message);
     }
   });
 

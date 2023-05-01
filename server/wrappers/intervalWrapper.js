@@ -9,7 +9,7 @@ const { getAccessToken, getListenHistory, updatePlaylist } = require(path.join(
 const intervalWrapper = {};
 
 intervalWrapper.runAlgos = async () => {
-  console.log('runningAlgos');
+  console.log('RUNNING', 'file: intervalWrapper.js:33 ~ algos.forEach ~ idArray:');
   try {
     const { algos } = JSON.parse(
       await fs.readFile(path.join(__dirname, '..', 'data', 'data.json'))
@@ -19,11 +19,7 @@ intervalWrapper.runAlgos = async () => {
       await fs.readFile(path.join(__dirname, '..', 'data', '__SECRETS__.json'))
     );
 
-    const { access_token } = await getAccessToken(
-      refresh_token,
-      client_id,
-      client_secret
-    );
+    const { access_token } = await getAccessToken(refresh_token, client_id, client_secret);
 
     const listenHistory = await getListenHistory(access_token);
 
@@ -34,7 +30,6 @@ intervalWrapper.runAlgos = async () => {
       const func = new Function('arr', functionStr + 'return algo(arr)');
 
       const idArray = func(listenHistory);
-      console.log(idArray);
 
       await updatePlaylist(access_token, playlistId, idArray);
     });
@@ -44,15 +39,19 @@ intervalWrapper.runAlgos = async () => {
 };
 
 intervalWrapper.startInterval = () => {
-  console.log('starting interval');
-  intervalWrapper.runAlgos();
+  
+  // intervalWrapper.runAlgos();
 
-  // rerun startInterval at midnight
+  // put startInterval on the callback queue
   const now = new Date();
-  const timeUntilMidnight =
-    new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) - now;
+  console.log('RUNNING','file: intervalWrapper.js:47:');
 
-  setTimeout(intervalWrapper.startInterval, timeUntilMidnight);
+  const timeUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) - now;
+
+  const timeToNextHour =
+    60 * (60 - now.getMinutes()) * 1000 - now.getSeconds() * 1000 - now.getMilliseconds();
+
+  setTimeout(intervalWrapper.startInterval, timeToNextHour);
 };
 
 module.exports = intervalWrapper;

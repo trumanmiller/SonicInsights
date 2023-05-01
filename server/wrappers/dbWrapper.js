@@ -1,7 +1,7 @@
 const fs = require('fs/promises');
 const path = require('path');
 
-const file = path.join('./db.json');
+const file = path.join(__dirname, '..', 'data', 'data.json');
 
 const dbWrapper = {};
 
@@ -27,8 +27,8 @@ dbWrapper.read = () =>
 
 dbWrapper.append = (dataObj) =>
   new Promise(async (resolve, reject) => {
-    if (typeof dataObj !== Object)
-      reject('dbWrapper.append received arg typeof' + typeof dataObj + ', expected Object');
+    if (typeof dataObj !== 'object')
+      reject('dbWrapper.append received arg typeof ' + typeof dataObj + ', expected object');
 
     try {
       const storedData = await dbWrapper.read();
@@ -36,6 +36,7 @@ dbWrapper.append = (dataObj) =>
       await dbWrapper.write(storedData);
       resolve();
     } catch (err) {
+      console.log('ERROR in dbWrapper.append: ', err);
       reject(new Error('ERROR in dbWrapper.append: ', { cause: err }));
     }
   });
