@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const fs = require('fs/promises');
@@ -16,10 +17,7 @@ app.use('/login', loginRouter);
 // app.use('/spotify', spotifyRouter);
 app.use('/playlist', playlistRouter);
 
-app.use(
-  ['/', '/editor'],
-  express.static(path.join(__dirname, '../client/dist'))
-);
+app.use(['/', '/editor'], express.static(path.join(__dirname, '../client/dist')));
 
 app.use(['/', '/editor'], (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));

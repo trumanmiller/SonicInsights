@@ -40,7 +40,7 @@ intervalWrapper.runAlgos = async () => {
 
 intervalWrapper.startInterval = () => {
   
-  // intervalWrapper.runAlgos();
+  intervalWrapper.runAlgos();
 
   // put startInterval on the callback queue
   const now = new Date();
