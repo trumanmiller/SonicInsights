@@ -10,6 +10,7 @@ const toExport = {};
 
 toExport.mostFrequentlyListened = (arr) => {
   const cache = {};
+  console.log(arr);
   for (const el of arr.data.items) {
     cache[el.track.uri] ? cache[el.track.uri]++ : (cache[el.track.uri] = 1);
   }

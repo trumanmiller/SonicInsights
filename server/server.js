@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const fs = require('fs/promises');
@@ -9,14 +10,14 @@ app.use(express.json());
 
 const loginRouter = require('./routers/loginRouter');
 const spotifyRouter = require('./routers/spotifyRouter');
+const playlistRouter = require('./routers/playlistRouter');
+const { startInterval } = require('./wrappers/intervalWrapper');
 
 app.use('/login', loginRouter);
-app.use('/spotify', spotifyRouter);
+// app.use('/spotify', spotifyRouter);
+app.use('/playlist', playlistRouter);
 
-app.use(
-  ['/', '/editor'],
-  express.static(path.join(__dirname, '../client/dist'))
-);
+app.use(['/', '/editor'], express.static(path.join(__dirname, '../client/dist')));
 
 app.use(['/', '/editor'], (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
@@ -44,3 +45,5 @@ if (process.env.NODE_ENV !== 'test') {
 } else {
   module.exports = app;
 }
+
+startInterval();
