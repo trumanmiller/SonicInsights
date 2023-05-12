@@ -1,0 +1,61 @@
+.raisedNeomorphic {
+  color: #d1c7c7;
+  background: #1e1e1e;
+  box-shadow: 5px 5px 10px #151515, -5px -5px 10px #272727;
+  border-radius: 22px;
+  margin: 20px;
+}
+
+.buttonNeomorphic {
+  color: #d1c7c7;
+  padding: 10px;
+  border-radius: 22px;
+  background: #1e1e1e;
+  box-shadow: 5px 5px 10px #151515, -5px -5px 10px #272727,
+    0 0 0 rgba(0, 0, 0, 0) inset, 0 0 0 rgba(0, 0, 0, 0) inset;
+  transition: box-shadow 0.15s;
+}
+
+.buttonNeomorphic:hover {
+  background: linear-gradient(145deg, #1b1b1b, #202020);
+  box-shadow: 4px 4px 7px #151515, -4px -4px 7px #272727,
+    0 0 0 rgba(0, 0, 0, 0) inset, 0 0 0 rgba(0, 0, 0, 0) inset;
+}
+
+.buttonNeomorphic:active {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(0, 0, 0, 0),
+    inset -3px 3px 5px #151515, inset 3px -3px 5px #272727;
+  outline: none; /* Add this to remove the default focus outline */
+}
+#LoginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#Sidebar {
+  width: 30vw;
+  height: 95vh;
+}
+#Editor {
+  overflow: hidden;
+  width: 70vw;
+  height: 95vh;
+  // outline: 1px solid red;
+}
+
+// STILL NOT RESPONISIIIIIIIVEEEEE AAAHHAHAHHAHAHHAHHHHH
+
+@media screen and (max-width: 480px) {
+  #LoginContainer {
+    flex-direction: column;
+  }
+  .raisedNeomorphic {
+    margin: 10px;
+  }
+  #Editor {
+    overflow: hidden;
+    width: 95vw;
+    height: 75vh;
+    // outline: 1px solid red;
+  }
+}

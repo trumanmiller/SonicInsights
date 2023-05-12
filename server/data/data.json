@@ -1,0 +1,7 @@
+{
+  "algos": [{
+    "playlistId" : 8392845391,
+    "lang" : "javascript",
+    "functionStr" : "function algorithm(arr) {return arr}"
+  }]
+}
