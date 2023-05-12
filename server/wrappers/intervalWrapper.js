@@ -9,7 +9,6 @@ const { getAccessToken, getListenHistory, updatePlaylist } = require(path.join(
 const intervalWrapper = {};
 
 intervalWrapper.runAlgos = async () => {
-  console.log('RUNNING', 'file: intervalWrapper.js:33 ~ algos.forEach ~ idArray:');
   try {
     const { algos } = JSON.parse(
       await fs.readFile(path.join(__dirname, '..', 'data', 'data.json'))
@@ -34,17 +33,15 @@ intervalWrapper.runAlgos = async () => {
       await updatePlaylist(access_token, playlistId, idArray);
     });
   } catch (err) {
-    console.log(err);
+    console.log('file: intervalWrapper.js:37 - intervalWrapper.runAlgos= - err:', err);
   }
 };
 
 intervalWrapper.startInterval = () => {
-  
   intervalWrapper.runAlgos();
 
   // put startInterval on the callback queue
   const now = new Date();
-  console.log('RUNNING','file: intervalWrapper.js:47:');
 
   const timeUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) - now;
 

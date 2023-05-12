@@ -2,11 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const fs = require('fs/promises');
+const cookieparser = require('cookie-parser');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT ?? 3000;
 
 app.use(express.json());
+app.use(cookieparser());
 
 const loginRouter = require('./routers/loginRouter');
 const spotifyRouter = require('./routers/spotifyRouter');
@@ -14,7 +16,7 @@ const playlistRouter = require('./routers/playlistRouter');
 const { startInterval } = require('./wrappers/intervalWrapper');
 
 app.use('/login', loginRouter);
-// app.use('/spotify', spotifyRouter);
+app.use('/spotify', spotifyRouter);
 app.use('/playlist', playlistRouter);
 
 app.use(['/', '/editor'], express.static(path.join(__dirname, '../client/dist')));
@@ -40,7 +42,7 @@ app.use((err, req, res, next) => {
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
-    console.log(`Server listening on PORT ${PORT}`);
+    console.log(`Server running in ${process.env.NODE_ENV} mode, listening on PORT ${PORT}`);
   });
 } else {
   module.exports = app;

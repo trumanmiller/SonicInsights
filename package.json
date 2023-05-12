@@ -5,8 +5,9 @@
   "main": ".js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon server/server.js"
+    "start": "cd client && npm run build && cd ../server && npm run start",
+    "prod": "cd client && npm run build && cd ../server && npm run start",
+    "dev": "cd server && npm run dev"
   },
   "repository": {
     "type": "git",
@@ -34,8 +35,5 @@
     "semi": true,
     "singleQuote": true,
     "printWidth": 100
-  },
-  "dependencies": {
-    "dotenv": "^16.0.3"
   }
 }
