@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const encryptionWrapper = {};
 
 const iv = process.env.IV;
@@ -12,11 +13,24 @@ encryptionWrapper.encrypt = (text) => {
 };
 
 encryptionWrapper.decrypt = (data) => {
-  let encryptedText = Buffer.from(text, 'base64');
+  let encryptedText = Buffer.from(data, 'base64');
   let decipher = crypto.createDecipheriv(algorithm, key, iv);
   let decrypted = decipher.update(encryptedText);
   decrypted = Buffer.concat([decrypted, decipher.final()]);
   return decrypted.toString();
+};
+
+encryptionWrapper.randomString = (length) => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const randomBytes = crypto.randomBytes(length);
+  const result = [];
+
+  for (let i = 0; i < randomBytes.length; i++) {
+    const index = randomBytes[i] % characters.length;
+    result.push(characters[index]);
+  }
+
+  return result.join('');
 };
 
 module.exports = encryptionWrapper;

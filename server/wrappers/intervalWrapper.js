@@ -29,7 +29,6 @@ intervalWrapper.runAlgos = async () => {
       const func = new Function('arr', functionStr + 'return algo(arr)');
 
       const idArray = func(listenHistory);
-
       await updatePlaylist(access_token, playlistId, idArray);
     });
   } catch (err) {
