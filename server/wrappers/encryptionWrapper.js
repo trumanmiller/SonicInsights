@@ -1,23 +1,42 @@
 const crypto = require('crypto');
 const encryptionWrapper = {};
 
-const iv = process.env.IV;
-const key = process.env.KEY;
-const algorithm = process.env.ALGORITHM;
+const algorithm = process.env.ENCRYPTION_ALGORITHM;
+const key = process.env.ENCRYPTION_KEY;
+const iv = process.env.ENCRYPTION_IV;
 
-encryptionWrapper.encrypt = (text) => {
-  let cipher = crypto.createCipheriv(algorithm, key, iv);
-  let encrypted = cipher.update(text);
-  encrypted = Buffer.concat([encrypted, cipher.final()]);
-  return encrypted.toString('base64');
+encryptionWrapper.encrypt = (input) => {
+  if (Array.isArray(input)) {
+    return input.map((text) => {
+      let cipher = crypto.createCipheriv(algorithm, key, iv);
+      let encrypted = cipher.update(text);
+      encrypted = Buffer.concat([encrypted, cipher.final()]);
+      return encrypted.toString('base64');
+    });
+  } else if (typeof input === 'string') {
+    let cipher = crypto.createCipheriv(algorithm, key, iv);
+    let encrypted = cipher.update(text);
+    encrypted = Buffer.concat([encrypted, cipher.final()]);
+    return encrypted.toString('base64');
+  } else return 'ERROR, encryptionWrapper.encrypt recieved invalid input';
 };
 
-encryptionWrapper.decrypt = (data) => {
-  let encryptedText = Buffer.from(data, 'base64');
-  let decipher = crypto.createDecipheriv(algorithm, key, iv);
-  let decrypted = decipher.update(encryptedText);
-  decrypted = Buffer.concat([decrypted, decipher.final()]);
-  return decrypted.toString();
+encryptionWrapper.decrypt = (input) => {
+  if (Array.isArray(input)) {
+    return input.map((data) => {
+      let encryptedText = Buffer.from(data, 'base64');
+      let decipher = crypto.createDecipheriv(algorithm, key, iv);
+      let decrypted = decipher.update(encryptedText);
+      decrypted = Buffer.concat([decrypted, decipher.final()]);
+      return decrypted.toString();
+    });
+  } else if (typeof input === 'string') {
+    let encryptedText = Buffer.from(input, 'base64');
+    let decipher = crypto.createDecipheriv(algorithm, key, iv);
+    let decrypted = decipher.update(encryptedText);
+    decrypted = Buffer.concat([decrypted, decipher.final()]);
+    return decrypted.toString();
+  } else return 'ERROR, encryptionWrapper.decrypt recieved invalid input';
 };
 
 encryptionWrapper.randomString = (length) => {

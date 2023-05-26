@@ -220,4 +220,25 @@ spotifyWrapper.getLyrics = (artist, track) =>
     }
   });
 
+spotifyWrapper.getEmail = (access_token) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const accountData = await fetch('https://api.spotify.com/v1/me', {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + access_token,
+          'Content-Type': 'application/json',
+        },
+      });
+      const accountInfo = await accountData.json();
+      if (accountData.status === 200) {
+        resolve(accountInfo.email);
+      } else {
+        reject('ERROR in spotifyWrapper.getEmail, check if status code');
+      }
+    } catch (err) {
+      reject('ERROR in spotifyWrapper.getEmail: ' + err.message);
+    }
+  });
+
 module.exports = spotifyWrapper;
