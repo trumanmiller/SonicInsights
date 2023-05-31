@@ -132,7 +132,7 @@ spotifyWrapper.createPlaylist = (access_token) =>
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            name: 'New Playlist',
+            name: 'SonicInsights playlist',
             description: 'New playlist description',
             public: false,
           }),
@@ -145,6 +145,99 @@ spotifyWrapper.createPlaylist = (access_token) =>
       else resolve(playlistData.id);
     } catch (err) {
       reject('ERROR in spotifyWrapper.createPlaylist: ' + err.message);
+    }
+  });
+
+/**
+  Retrieves the genre(s) associated with a given artist or track from Spotify API.
+  @param {string} access_token - The access token for authorization.
+  @param {string|boolean} artist - Optional. The artist ID or name. Default: false.
+  @param {string|boolean} track - Optional. The track ID or name. Default: false.
+  @returns {Promise} A promise that resolves with an array of genre(s).
+  @resolves {string[]} array of genres in string form.
+  @rejects {string} Error message
+  */
+
+spotifyWrapper.getGenre = (access_token, artist = false, track = false) =>
+  new Promise(async (resolve, reject) => {
+    let artistId;
+    if (artist) {
+      artistId = artist;
+    } else if (track) {
+      try {
+        const data = await (
+          await fetch(`https://api.spotify.com/v1/tracks/${track}`, {
+            method: 'GET',
+            headers: {
+              Authorization: 'Bearer ' + access_token,
+              'Content-Type': 'application/json',
+            },
+          })
+        ).json();
+
+        artistId = data.artists[0].id;
+      } catch (err) {
+        reject('ERROR in spotifyWrapper.getGenre: ' + err.message);
+      }
+    } else reject('missing arguments');
+    try {
+      const data = await (
+        await fetch(`https://api.spotify.com/v1/artists/${artistId}`, {
+          method: 'GET',
+          headers: {
+            Authorization: 'Bearer ' + access_token,
+            'Content-Type': 'application/json',
+          },
+        })
+      ).json();
+
+      resolve(data.genres);
+    } catch (err) {
+      reject('ERROR in spotifyWrapper.getGenre: ' + err.message);
+    }
+  });
+
+/**
+  Retrieves the lyrics for a given artist and track by scraping the genius website.
+  @param {string} artist - The name of the artist.
+  @param {string} track - The name of the track.
+  @returns {Promise<string>} A promise that resolves with the lyrics of the track.
+  @resolves {string} Scraped lyrics
+  @rejects {string} Error message
+  */
+
+spotifyWrapper.getLyrics = (artist, track) =>
+  new Promise(async (resolve, reject) => {
+    const url = `http://genius.com/${artist.replace(' ', '-')}-${track.replace(' ', '-')}-lyrics`;
+
+    try {
+      let data = await (await fetch(url, { method: 'GET' })).text();
+      const $ = cheerio.load(data);
+      const result = $('.Lyrics__Container-sc-1ynbvzw-5').text();
+      resolve(result);
+    } catch (error) {
+      reject('ERROR in spotifyWrapper.getLyrics: ' + err.message);
+    }
+  });
+
+spotifyWrapper.getEmail = (access_token) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const accountData = await fetch('https://api.spotify.com/v1/me', {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + access_token,
+          'Content-Type': 'application/json',
+        },
+      });
+      const accountInfo = await accountData.json();
+      if (accountData.status === 200) {
+        resolve(accountInfo.email);
+      } else {
+        reject('ERROR in spotifyWrapper.getEmail, check if status code');
+      }
+    } catch (err) {
+      reject('ERROR in spotifyWrapper.getEmail: ' + err.message);
     }
   });
 

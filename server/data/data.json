@@ -4,6 +4,26 @@
       "playlistId": "4kccTKN5jIHkvCb2SceDGy",
       "lang": "javascript",
       "functionStr": "function algo(arr) {const cache = {};for (const el of arr.items) {cache[el.track.uri] ? cache[el.track.uri]++ : (cache[el.track.uri] = 1);}const sortedArray = [];let highestOccurence = -Infinity;let highestOccuringId = '';while (sortedArray.length < 12) {for (const key in cache) {if (highestOccurence < cache[key]) {highestOccurence = cache[key];highestOccuringId = key;}}delete cache[highestOccuringId];sortedArray.push(highestOccuringId);highestOccurence = -Infinity;highestOccuringId = '';}return sortedArray;}"
+    },
+    {
+      "playlistId": "2qzf07avMFpuuNMj5oQ4xX",
+      "functionStr": "function algo(trackData) {trackData = trackData.items; const morningTracks = trackData.filter (track => {const playedAt = new Date(track.played_at);const hours = playedAt.getHours();return hours >= 6 && hours < 12; });morningTracks.sort((a, b) => b.track.popularity - a.track.popularity); const trackIds = morningTracks.map(track => track.track.uri);return [...new Set(trackIds)];}"
+    },
+    {
+      "playlistId": "0RJ32AUvsvexDvOEUyc9Sy",
+      "functionStr": "function algo(trackData) { trackData = trackData.items; const morningTracks = trackData.filter(track => { const playedAt = new Date(track.played_at); const hours = playedAt.getHours(); return hours >= 12 && hours < 18; }); morningTracks.sort((a, b) => b.track.popularity - a.track.popularity); const trackIds = morningTracks.map(track => track.track.uri); return [...new Set(trackIds)]; }"
+    },
+    {
+      "playlistId": "2BjbtYUebnziwAjm8hWcRM",
+      "functionStr": "function algo(trackData) { trackData = trackData.items; const morningTracks = trackData.filter(track => { const playedAt = new Date(track.played_at); const hours = playedAt.getHours(); return hours >= 18 && hours <= 23; }); morningTracks.sort((a, b) => b.track.popularity - a.track.popularity); const trackIds = morningTracks.map(track => track.track.uri); return [...new Set(trackIds)]; }"
+    },
+    {
+      "playlistId": "0PJ8lpFaHn50eUlflFeGGR",
+      "functionStr": "function algo(songArray) {\n  songArray = songArray.items;\n    // Create a map for song counts\n    let songCounts = new Map();\n\n    // Count the occurrences of each song\n    songArray.forEach(song => {\n        let uri = song.track.uri;\n        if (songCounts.has(uri)) {\n            songCounts.set(uri, songCounts.get(uri) + 1);\n        } else {\n            songCounts.set(uri, 1);\n        }\n    });\n\n    // Find the maximum count\n    let maxCount = Math.max(...songCounts.values());\n\n    // Filter the map to only include songs with the maximum count\n    let mostFrequentSongs = [];\n    songCounts.forEach((count, uri) => {\n        if (count === maxCount) {\n            mostFrequentSongs.push(uri);\n        }\n    });\n\n    return mostFrequentSongs;\n}"
+    },
+    {
+      "playlistId": "3qwKPYIRoQ1IBLmjS5TJ6o",
+      "functionStr": "function algo(songArray) {\n songArray = songArray.items\n    // Create a map for song counts\n    let songCounts = new Map();\n\n    // Count the occurrences of each song\n    songArray.forEach(song => {\n        let uri = song.track.uri;\n        if (songCounts.has(uri)) {\n            songCounts.set(uri, songCounts.get(uri) + 1);\n        } else {\n            songCounts.set(uri, 1);\n        }\n    });\n\n    // Convert the map to an array of arrays\n    let countArray = Array.from(songCounts.entries());\n\n    // Sort the array by count in descending order\n    countArray.sort((a, b) => b[1] - a[1]);\n\n    // Map the sorted array back to an array of URIs\n    let sortedURIs = countArray.map(item => item[0]);\n\n    return sortedURIs;\n}"
     }
   ]
 }
