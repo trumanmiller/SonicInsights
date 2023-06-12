@@ -34,10 +34,12 @@ app.use((err, req, res, next) => {
     log: 'Global error handler caught an unknown error.',
     status: 500,
     message: { err: 'An error has occurred' },
+    redirect: '/404'
   };
   const errorObj = Object.assign({}, defaultError, err);
-  console.log(errorObj.log);
-  return res.status(errorObj.status).json(errorObj.message);
+  if (errorObj.log.length !== 0) console.log(errorObj.log);
+
+  return res.status(errorObj.status).redirect(errorObj.redirect);
 });
 
 if (process.env.NODE_ENV !== 'test') {

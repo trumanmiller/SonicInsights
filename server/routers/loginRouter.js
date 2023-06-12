@@ -112,9 +112,10 @@ router.get('/callback', async (req, res, next) => {
       console.log(err);
     }
 
-    res.cookie('cookie', cookieString, {
+    res.cookie('sessionCookie', cookieString, {
       secure: process.env.NODE_ENV === 'production' ? true : false,
       httpOnly: true,
+      sameSite: 'strict',
       maxAge: 720 * 3600000, // first number is hours, second converts that into milliseconds
     });
     res.redirect('/editor');

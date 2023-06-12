@@ -1,4 +1,4 @@
-spotifyWrapper = {};
+const spotifyWrapper = {};
 
 /**
   Retrieves a refreshed access token using the provided refresh_token, client_id, and client_secret.
