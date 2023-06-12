@@ -6,12 +6,10 @@ const PG_URI = process.env.ELEPHANTSQL_PG_URI;
 
 const pool = new Pool({
   connectionString: PG_URI,
-  max: 5,
+  max: 4,
 });
 
 // module.exports = pool;
-
-// console.log(await pool.query('SELECT * FROM "public"."spatial_ref_sys" LIMIT 100'))
 
 module.exports = {
   query: (text, params, callback) => {
@@ -36,11 +34,15 @@ const queryValues = [refreshToken, email, accessToken];
 
 CREATE TABLE session (
   session_id serial PRIMARY KEY,
-  cookie varchar(100) NOT NULL,
+  cookie varchar(100) NOT NULL UNIQUE,
   created_at timestamp DEFAULT now(),
   account_id int NOT NULL,
   FOREIGN KEY (account_id) REFERENCES account (account_id) ON DELETE CASCADE
 );
+
+ALTER TABLE session
+ADD CONSTRAINT cookie_unique UNIQUE (cookie);
+
 
 CREATE TABLE algorithm (
   algorithm_id serial PRIMARY KEY,
