@@ -65,5 +65,4 @@ arr is an array of objects with the following shape
   played_at: '2023-04-25T22:24:39.344Z',
   context: null,
 }
-*/
-`;
+*/`;
