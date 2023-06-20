@@ -2,9 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import './LoginContainer.scss';
 
 function LoginContainer({}) {
-  const navigate = useNavigate();
-  const redirectHandler = () => {
+  const loginRedirectHandler = () => {
     location.assign('/login');
+  };
+  const editorRedirectHandler = () => {
+    location.assign('/editor');
   };
 
   return (
@@ -12,21 +14,23 @@ function LoginContainer({}) {
       <div id="visualIsland">
         <div id="content">
           <div className="raisedNeomorphic" id="infoIsland">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+            SonicInsights is a Spotify playlist generation tool that utilizes user data to create
+            personalized playlists with customizable algorithms.
             <br />
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            It aims to provide users with a unique and customizable experience, by creating
+            playlists based on algorithms that they build.
             <br />
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            <br />
-            nisi ut aliquip ex ea commodo consequat.
+            Authentication through spotify is required for any functionality, but you can try out
+            the editor without it.
           </div>
-          <button
-            onClick={redirectHandler}
-            className="raisedNeomorphic"
-            id="loginButton"
-          >
-            Login with Spotify
-          </button>
+          <div>
+            <button onClick={loginRedirectHandler} className="raisedNeomorphic" id="loginButton">
+              Login with Spotify
+            </button>
+            <button onClick={editorRedirectHandler} className="raisedNeomorphic">
+              Editor
+            </button>
+          </div>
         </div>
       </div>
     </div>
